@@ -305,9 +305,16 @@ Airport::checkCollisions()
 			if( (*i)->getPosition().distance((*j)->getPosition()) < COLLISION_DISTANCE)
 			{
 				std::cerr<<"Collision between "<<(*i)->getId()<<" and "<<(*j)->getId()<<std::endl;
+				//------------------------------------------------avion colisionado
+				if(((*i)->getIs_Landing())||((*j)->getIs_Landing())){
+					any_landing_=false;
+				}
+
 				i = removeFlight((*i)->getId());
 				j = removeFlight((*j)->getId());
 				points += COLLISION_POINTS;
+
+
 				return; //Avoid not valid iterator. Only one collision per cycle
 			}
 			j++;
@@ -362,17 +369,29 @@ Airport::checkCrashes()
 		if((*it)->getPosition().get_z()<CRASH_Z)
 		{
 			std::cerr<<"[PoZ]Crash of "<<(*it)->getId()<<std::endl;
+			if((*it)->getIs_Landing()){
+				any_landing_=false;
+			}
 			it=removeFlight((*it)->getId());
+
 			points += CRASH_HEIGHT_POINTS;
 		}else if(toDegrees(fabs((*it)->getInclination())) > CRASH_INC)
 		{
 			std::cerr<<"[Inc] Crash of "<<(*it)->getId()<<std::endl;
+			if((*it)->getIs_Landing()){
+				any_landing_=false;
+			}
 			it = removeFlight((*it)->getId());
+
 			points += CRASH_INC_POINTS;
 		}else if( (*it)->getSpeed()<CRASH_SPEED)
 		{
 			std::cerr<<"[Spd] Crash of "<<(*it)->getId()<<std::endl;
+			if((*it)->getIs_Landing()){
+				any_landing_=false;
+			}
 			it = removeFlight((*it)->getId());
+
 			points += CRASH_SPEED_POINTS;
 		}else
 			it++;

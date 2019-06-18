@@ -52,12 +52,17 @@ public:
 	float getInclination() { return inclination;};
 	float getBearing() { return bearing;};
 	float getInitBearing() { return init_bearing;};
+	float getInitZ() { return init_z;};
+	float getInitY() { return init_y;};
+	float getInitX() { return init_x;};
 	float getSpeed() { return speed;};
 	void setSpeed(float tgt_speed) {speed = checkSpeedLimits(tgt_speed);}
 	float getPoints() {return points;};
 	std::string getId(){return id;};
 	void setFocused(bool state) { focused = state;};
+	void setIs_Landing(bool state) { is_landing = state;};
 	bool getFocused() { return focused;};
+	bool getIs_Landing() { return is_landing;};
 
 	bool getInStorm() {return inStorm;};
 	void setInStorm(bool in) {inStorm=in;};
@@ -65,10 +70,11 @@ public:
 private:
 	std::string id;
 	Position pos, last_pos;
-	float init_bearing, bearing, inclination;
+	float init_bearing,init_z,init_y,init_x, bearing, inclination;
 	float speed, w_speed;
 	std::list<Route> route;
 	bool focused;
+	bool is_landing;
 
 	bool inStorm;
 
